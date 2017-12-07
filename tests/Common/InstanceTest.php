@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
 // +----------------------------------------------------------------------
-namespace Tests\Cli;
+namespace Tests\Common;
 
 use Tests\App\Ins1;
 use Tests\App\Ins2;
