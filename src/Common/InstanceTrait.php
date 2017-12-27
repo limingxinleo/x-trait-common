@@ -10,14 +10,31 @@ namespace Xin\Traits\Common;
 
 trait InstanceTrait
 {
-    protected static $_instance;
+    protected static $_instances = [];
 
-    public static function getInstance()
+    protected $instanceKey;
+
+    public static function getInstance($key = 'default')
     {
-        if (isset(static::$_instance) && static::$_instance instanceof static) {
-            return static::$_instance;
+        if (!isset($key)) {
+            $key = 'default';
         }
 
-        return static::$_instance = new static();
+        if (isset(static::$_instances[$key]) && static::$_instances[$key] instanceof static) {
+            return static::$_instances[$key];
+        }
+
+        $client = new static();
+        $client->instanceKey = $key;
+        return static::$_instances[$key] = $client;
+    }
+
+    /**
+     * @desc   回收单例对象
+     * @author limx
+     */
+    public function flushInstance()
+    {
+        unset(static::$_instances[$this->instanceKey]);
     }
 }

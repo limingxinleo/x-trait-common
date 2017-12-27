@@ -21,6 +21,11 @@ class Ins1
 
     public function instance()
     {
-        return static::$_instance;
+        return static::$_instances['default'];
+    }
+
+    public function instances()
+    {
+        return static::$_instances;
     }
 }
