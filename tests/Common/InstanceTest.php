@@ -51,6 +51,4 @@ class BaseTest extends TestCase
             $client->flushInstance();
         }
     }
-
-
 }

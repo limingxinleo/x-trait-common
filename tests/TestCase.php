@@ -14,9 +14,7 @@ use Phalcon\Config;
 
 abstract class TestCase extends UnitTestCase
 {
-
     public function setUp()
     {
-
     }
 }
