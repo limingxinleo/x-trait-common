@@ -9,6 +9,7 @@
 namespace Tests\Common;
 
 use PHPUnit\Framework\TestCase;
+use Tests\App\MacroClass;
 use Xin\Traits\Common\Macroable;
 
 class MacroableTest extends TestCase
@@ -17,12 +18,7 @@ class MacroableTest extends TestCase
 
     public function setUp()
     {
-        $this->macroable = $this->createObjectForTrait();
-    }
-
-    private function createObjectForTrait()
-    {
-        return $this->getObjectForTrait(Macroable::class);
+        $this->macroable = new MacroClass();
     }
 
     public function testRegisterMacro()

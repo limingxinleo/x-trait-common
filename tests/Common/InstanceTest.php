@@ -12,7 +12,7 @@ use Tests\App\Ins1;
 use Tests\App\Ins2;
 use Tests\TestCase;
 
-class BaseTest extends TestCase
+class InstanceTest extends TestCase
 {
     public function testExample()
     {
@@ -27,6 +27,7 @@ class BaseTest extends TestCase
         $ins1 = Ins1::getInstance();
         $this->assertEquals($ins1, Ins1::getInstance());
         $this->assertEquals($ins1, Ins1::getInstance()->instance());
+        Ins1::getInstance()->flushInstance();
     }
 
     public function testKeyCase()
@@ -41,6 +42,7 @@ class BaseTest extends TestCase
         $this->assertEquals($client2, $client->instances()['key2']);
 
         $client->flushInstance();
+        $client2->flushInstance();
         $this->assertFalse(isset($client2->instances()['key1']));
     }
 
@@ -50,5 +52,6 @@ class BaseTest extends TestCase
             $client = Ins1::getInstance($i);
             $client->flushInstance();
         }
+        $this->assertEquals(1, count(Ins1::getInstance()->instances()));
     }
 }
