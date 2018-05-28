@@ -12,6 +12,7 @@ use Tests\App\Ins1;
 use Tests\App\Ins2;
 use Tests\App\Ins3;
 use Tests\App\Ins4;
+use Tests\App\Time;
 use Tests\TestCase;
 
 class InstanceTest extends TestCase
@@ -81,5 +82,15 @@ class InstanceTest extends TestCase
         $this->assertEquals(2, count(Ins3::getInstance()->instances()));
         $this->assertEquals(2, count(Ins4::getInstance()->instances()));
         $this->assertEquals(Ins3::getInstance()->instances(), Ins4::getInstance()->instances());
+    }
+
+    public function testInstanceRefresh()
+    {
+        $client = Time::getInstance();
+        $client2 = Time::getInstance();
+        $client3 = Time::getInstance(null, true);
+
+        $this->assertEquals($client->time, $client2->time);
+        $this->assertTrue($client3->time > $client2->time);
     }
 }
