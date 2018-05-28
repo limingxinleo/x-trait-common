@@ -14,13 +14,13 @@ trait InstanceTrait
 
     protected $instanceKey;
 
-    public static function getInstance($key = 'default')
+    public static function getInstance($key = null, $refresh = false)
     {
         if (!isset($key)) {
-            $key = 'default';
+            $key = get_called_class();
         }
 
-        if (isset(static::$_instances[$key]) && static::$_instances[$key] instanceof static) {
+        if (!$refresh && isset(static::$_instances[$key]) && static::$_instances[$key] instanceof static) {
             return static::$_instances[$key];
         }
 

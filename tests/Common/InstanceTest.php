@@ -10,6 +10,8 @@ namespace Tests\Common;
 
 use Tests\App\Ins1;
 use Tests\App\Ins2;
+use Tests\App\Ins3;
+use Tests\App\Ins4;
 use Tests\TestCase;
 
 class InstanceTest extends TestCase
@@ -41,8 +43,16 @@ class InstanceTest extends TestCase
         $this->assertEquals($client, $client->instances()['key1']);
         $this->assertEquals($client2, $client->instances()['key2']);
 
+        $client3 = Ins2::getInstance('key3');
+        $this->assertArrayHasKey('key3', $client3->instances());
+
+        $this->assertArrayNotHasKey('key3', $client->instances());
+        $this->assertArrayNotHasKey('key1', $client3->instances());
+
         $client->flushInstance();
         $client2->flushInstance();
+        $client3->flushInstance();
+
         $this->assertFalse(isset($client2->instances()['key1']));
     }
 
@@ -53,5 +63,23 @@ class InstanceTest extends TestCase
             $client->flushInstance();
         }
         $this->assertEquals(1, count(Ins1::getInstance()->instances()));
+    }
+
+    public function testInstanceWhenExtends()
+    {
+        Ins2::getInstance()->flushInstance();
+
+        $client = Ins3::getInstance();
+        $client2 = Ins4::getInstance();
+
+        $this->assertEquals('ins3', $client->str());
+        $this->assertEquals('ins4', $client2->str());
+
+        $this->assertEquals('ins3', Ins3::getInstance()->str());
+        $this->assertEquals('ins4', Ins4::getInstance()->str());
+
+        $this->assertEquals(2, count(Ins3::getInstance()->instances()));
+        $this->assertEquals(2, count(Ins4::getInstance()->instances()));
+        $this->assertEquals(Ins3::getInstance()->instances(), Ins4::getInstance()->instances());
     }
 }

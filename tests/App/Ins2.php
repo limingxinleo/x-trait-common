@@ -21,6 +21,11 @@ class Ins2
 
     public function instance()
     {
-        return static::$_instances['default'];
+        return static::$_instances[get_called_class()];
+    }
+
+    public function instances()
+    {
+        return static::$_instances;
     }
 }
